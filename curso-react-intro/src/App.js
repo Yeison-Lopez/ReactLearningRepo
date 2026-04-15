@@ -6,17 +6,47 @@ import { TodoItem } from './TodoItem';
 import { CreateTodoButton } from './CreateTodoButton';
 import React from 'react';
 
-const defaultTodos = [
-  {text: 'cortar cebolla', completed: true},
-  {text: 'TTomar curso de intro  a React.js', completed: false},
-  {text: 'Llorar con la llorona', completed: true},
-  {text: 'LALLALALALA', completed: false}
-];
+//const defaultTodos = [
+//  {text: 'cortar cebolla', completed: true},
+//  {text: 'TTomar curso de intro  a React.js', completed: false},
+//  {text: 'Llorar con la llorona', completed: true},
+//  {text: 'LALLALALALA', completed: false}
+//];
+
+//localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
+//localStorage.removeItem('TODOS_V1')
+
+function useLocalStorage(itemName,initialValue){
+  
+
+  const localStorageItem = localStorage.getItem(itemName);
+  
+  let parsedItem;
+
+  if (!localStorageItem){
+    localStorage.setItem(itemName,JSON.stringify(initialValue));
+    parsedItem=[];
+  }
+  else{
+    parsedItem=JSON.parse(localStorageItem);
+  }
+
+  const[item, setItem] = React.useState(parsedItem);
+
+  const saveItem = (newItem) =>{
+    localStorage.setItem(itemName,JSON.stringify(newItem));
+    setItem(newItem);
+  };
+
+  return[item,saveItem];
+
+}
 
 
 function App() {
 
-  const [todos, setTodos] = React.useState(defaultTodos); 
+  
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1',[]); 
   const [searchValue, setSearchValue] = React.useState(''); 
 
   const completedTodos = todos.filter(todo => todo.completed).length;
@@ -32,7 +62,7 @@ function App() {
       (todo) => todo.text == text
     ); // we are looking for the index of the array that has the value "text" in it
     newTodos[todoIndex].completed = true;  // we are marking this as completed (true)
-    setTodos(newTodos); // we are reprinting what whe have above (const [todos, setTodos] = React.useState(defaultTodos); )
+    saveTodos(newTodos); // we are reprinting what whe have above (const [todos, setTodos] = React.useState(defaultTodos); )
   };
 
 
@@ -42,7 +72,7 @@ function App() {
       (todo) => todo.text == text
     ); // we are looking for the index of the array that has the value "text" in it
     newTodos.splice(todoIndex, 1); // this allows us to extract the position and delete it
-    setTodos(newTodos); // we are reprinting what whe have above (const [todos, setTodos] = React.useState(defaultTodos); )
+    saveTodos(newTodos); // we are reprinting what whe have above (const [todos, setTodos] = React.useState(defaultTodos); )
   };
 
   return (

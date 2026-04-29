@@ -11,6 +11,16 @@ function App() {
   const completedTodos = todos.filter(todo => todo.completed).length;
   const totalTodos = todos.length;
 
+  console.log('Log 1');
+
+  console.log('Log 2');
+
+  console.log('Log 3');
+
+
+
+
+
   const searchedTodos = todos.filter(todo => todo.text.toLowerCase().includes(searchValue.toLowerCase()));
 
   const completeTodo = (text) => {

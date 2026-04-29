@@ -13,7 +13,7 @@ function App() {
 
   console.log('Log 1');
 
-  console.log('Log 2');
+  console.log('Log 22');
 
   console.log('Log 3');
 

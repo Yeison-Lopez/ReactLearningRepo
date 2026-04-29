@@ -11,7 +11,11 @@ function App() {
   const completedTodos = todos.filter(todo => todo.completed).length;
   const totalTodos = todos.length;
 
+  console.log('Log 1');
 
+  console.log('Log 2');
+
+  console.log('Log 3');
 
 
 
